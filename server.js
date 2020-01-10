@@ -20,8 +20,8 @@ app.get("/auth/vk", async (req, res) => {
     const response = await axios.get(
       "https://oauth.vk.com/authorize?client_id=7277202&scope=friends&redirect_uri=https://aziz-oauth-vk.herokuapp.com&response_type=code&v=5.103"
     );
-    console.log(response);
-    res.send("Hi from /auth/vk");
+    console.log(response.data);
+    res.send(response.data);
   } catch (error) {
     res.send({ error });
   }
