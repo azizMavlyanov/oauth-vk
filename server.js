@@ -6,13 +6,15 @@ const app = express();
 const publicPath = path.join(__dirname, "public");
 const port = process.env.PORT || 3000;
 
-app.use(express.static(publicPath));
+// app.use(express.static(publicPath));
 app.use(express.json());
 app.use(cors());
 
 app.get("/", (req, res) => {
-  console.log(req);
-  res.sendFile(path.join(publicPath, "index.html"));
+  if (!req.query.code) return res.send("There is no code parameter");
+  console.log(req.query.code);
+  // res.sendFile(path.join(publicPath, "index.html"));
+  res.send(`code: ${req.query.code}`);
 });
 
 app.get("/auth/vk", async (req, res) => {
