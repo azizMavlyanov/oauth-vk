@@ -10,7 +10,7 @@ app.use(express.static(publicPath));
 app.use(express.json());
 app.use(cors());
 
-app.get("*", (req, res) => {
+app.get("/", (req, res) => {
   console.log(req);
   res.sendFile(path.join(publicPath, "index.html"));
 });
