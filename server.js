@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/", (req, res) => {
-  if (!req.query.code) return res.send("There is no code parameter");
+  if (!req.query.code) return res.send('<a href="/auth/vk">Log in via VK</a>');
   console.log(req.query.code);
   // res.sendFile(path.join(publicPath, "index.html"));
   res.send(`code: ${req.query.code}`);
