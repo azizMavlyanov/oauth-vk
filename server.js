@@ -33,7 +33,7 @@ app.get("/", async (req, res) => {
       .status(200)
       .json({ access_token, expires_in, user_id, accessTokenResponse });
   } catch (error) {
-    res.status(500).json({ error: "There is some error" });
+    res.status(500).json({ error });
   }
 });
 
