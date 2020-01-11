@@ -29,11 +29,9 @@ app.get("/", async (req, res) => {
     );
 
     console.log(response.data);
-    res
-      .status(200)
-      .json({ access_token, expires_in, user_id, accessTokenResponse });
+    res.status(200).json({ access_token, expires_in, user_id });
   } catch (error) {
-    res.status(500).json({ error });
+    res.status(500).json({ error: "There is some error" });
   }
 });
 
