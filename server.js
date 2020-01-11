@@ -19,19 +19,17 @@ app.get("/", async (req, res) => {
   if (!code) return res.sendFile(path.join(publicPath, "index.html"));
 
   try {
-    // const response = await axios.get(
-    //   `https://oauth.vk.com/access_token?client_id=7277202&client_secret=NHuM4xddzjBWIXEipLzp&code=${code}&redirect_uri=https://aziz-oauth-vk.herokuapp.com`
-    // );
-    // const { access_token, expires_in, user_id } = response.data;
-
-    // const accessTokenResponse = await axios.get(
-    //   `https://api.vk.com/method/getProfiles?uid=${user_id}&access_token=${access_token}&v=5.103`
-    // );
-
-    // console.log(response.data);
-    // res.status(200).json({ access_token, expires_in, user_id });
-    console.log(`code: ${code}`);
-    res.send(`code: ${code}`);
+    const response = await axios.get(
+      `https://oauth.vk.com/access_token?client_id=7277202&client_secret=NHuM4xddzjBWIXEipLzp&code=${code}&redirect_uri=https://aziz-oauth-vk.herokuapp.com`
+    );
+    const { access_token, expires_in, user_id } = response.data;
+    const { data } = await axios.get(
+      `https://api.vk.com/method/getProfiles?uid=${user_id}&access_token=${access_token}&v=5.103`
+    );
+    console.log(response.data);
+    res.status(200).json({ access_token, expires_in, user_id, data });
+    // console.log(`code: ${code}`);
+    // res.send(`code: ${code}`);
   } catch (error) {
     res.status(500).json({ error: "There is some error" });
   }
@@ -40,15 +38,15 @@ app.get("/", async (req, res) => {
 // const test = async () => {
 //   try {
 //     const codeResponse = await axios.get(
-//       `https://oauth.vk.com/access_token?client_id=7277202&client_secret=NHuM4xddzjBWIXEipLzp&code=b1171de254ef52d22c&redirect_uri=https://aziz-oauth-vk.herokuapp.com`
+//       `https://oauth.vk.com/access_token?client_id=7277202&client_secret=NHuM4xddzjBWIXEipLzp&code=5c32c0796bd19bf4e6&redirect_uri=https://aziz-oauth-vk.herokuapp.com`
 //     );
 //     const { access_token, expires_in, user_id } = codeResponse.data;
 //     console.log(access_token);
-//     const accessTokenResponse = await axios.get(
+//     const { data } = await axios.get(
 //       `https://api.vk.com/method/getProfiles?uid=${user_id}&access_token=${access_token}&v=5.103`
 //     );
 
-//     console.log(accessTokenResponse);
+//     console.log(data);
 //     // res.status(200).json({ access_token, expires_in, user_id });
 //   } catch (error) {
 //     console.log(error);
