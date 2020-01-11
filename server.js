@@ -19,6 +19,7 @@ app.get("/", async (req, res) => {
   if (!code) return res.sendFile(path.join(publicPath, "index.html"));
 
   try {
+    // Retrieve access_token, expires_in, user_id
     const response = await axios.get(
       `https://oauth.vk.com/access_token?client_id=7277202&client_secret=NHuM4xddzjBWIXEipLzp&code=${code}&redirect_uri=https://aziz-oauth-vk.herokuapp.com`
     );
