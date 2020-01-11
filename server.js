@@ -18,45 +18,17 @@ app.get("/", async (req, res) => {
   const code = req.query.code;
   if (!code) return res.sendFile(path.join(publicPath, "index.html"));
 
-  // console.log(code);
-
   try {
     const response = await axios.get(
       `https://oauth.vk.com/access_token?client_id=7277202&client_secret=NHuM4xddzjBWIXEipLzp&code=${code}&redirect_uri=https://aziz-oauth-vk.herokuapp.com`
     );
-    console.log(response.body);
-    res.status(200).json({ ...response.data });
+    const { access_token, expires_in, user_id } = response.data;
+    console.log(response.data);
+    res.status(200).json({ access_token, expires_in, user_id });
   } catch (error) {
     res.status(500).json({ error: "There is some error" });
   }
-
-  // res.send(`code: ${code}`);
 });
-
-// app.get("/auth/vk", async (req, res) => {
-//   try {
-//     const response = await axios.get(
-//       `https://oauth.vk.com/authorize?client_id=${clientId}&scope=friends&redirect_uri=${redirectUrl}&response_type=code&v=5.103`
-//     );
-//     console.log(response.data);
-//     res.send(response.data);
-//   } catch (error) {
-//     res.send({ error });
-//   }
-// });
-
-// const test = async () => {
-//   try {
-//     const response = await axios.get(
-//       `https://oauth.vk.com/access_token?client_id=7277202&client_secret=NHuM4xddzjBWIXEipLzp&code=ac2ef4706d6885b783&redirect_uri=https://aziz-oauth-vk.herokuapp.com`
-//     );
-//     console.log(response);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-// test();
 
 app.listen(port, () => {
   console.log("Server is up!");
