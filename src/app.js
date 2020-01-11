@@ -5,7 +5,7 @@ const cors = require("cors");
 const axios = require("axios");
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 const publicDirectoryPath = path.join(__dirname, "../public");
 const viewsPath = path.join(__dirname, "../templates/views");
@@ -21,32 +21,38 @@ app.use(express.static(publicDirectoryPath));
 app.use(express.json());
 app.use(cors());
 
-const clientId = "7277202";
-const clientSecret = "NHuM4xddzjBWIXEipLzp";
-const redirectUrl = "https://aziz-oauth-vk.herokuapp.com";
+// const clientId = "7277202";
+// const clientSecret = "NHuM4xddzjBWIXEipLzp";
+// const redirectUri = "https://aziz-oauth-vk.herokuapp.com";
+
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
+const redirectUri = process.env.REDIRECT_URI;
 
 app.get("/", async (req, res) => {
   const code = req.query.code;
-  if (!code) return res.render("auth", {});
+  // Check existence of code
+  if (!code) return res.render("auth", { clientId, redirectUri });
 
   try {
     // Retrieve access_token, expires_in, user_id
     const response = await axios.get(
-      `https://oauth.vk.com/access_token?client_id=7277202&client_secret=NHuM4xddzjBWIXEipLzp&code=${code}&redirect_uri=https://aziz-oauth-vk.herokuapp.com`
+      `https://oauth.vk.com/access_token?client_id=${clientId}&client_secret=${clientSecret}&code=${code}&redirect_uri=${redirectUrl}`
     );
     const { access_token, expires_in, user_id } = response.data;
 
+    // Retrieve authorized user's data
     const { data } = await axios.get(
       `https://api.vk.com/method/getProfiles?uid=${user_id}&access_token=${access_token}&v=5.103`
     );
     const userFirstName = data.response[0].first_name;
     const userLastName = data.response[0].last_name;
 
+    // Retrieve data about user's friends
     const friendsResponse = await axios.get(
       `https://api.vk.com/method/friends.get?uid=${user_id}&order=random&count=5&access_token=${access_token}&v=5.103&fields=photo_100,names&name_case=ins`
     );
     const listOfFriends = friendsResponse.data.response.items;
-    console.log(friendsResponse.data.response);
 
     res.render("index", { userFirstName, userLastName, listOfFriends });
   } catch (error) {
@@ -55,5 +61,5 @@ app.get("/", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("Server is up!");
+  console.log(`Server is up on port ${port}`);
 });
