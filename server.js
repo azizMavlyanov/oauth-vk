@@ -29,10 +29,10 @@ app.get("/", async (req, res) => {
     const first_name = data.response[0].first_name;
     const last_name = data.response[0].last_name;
 
-    // console.log(response.data);
-    // res.status(200).json({ access_token, expires_in, user_id, data });
+    console.log(response.data);
+    res.status(200).json({ access_token, expires_in, user_id, first_name });
     // console.log(`code: ${code}`);
-    res.send("Привет! ${first_name} ${last_name}");
+    // res.send("Привет! ${first_name} ${last_name}");
   } catch (error) {
     res.status(500).json({ error: "There is some error" });
   }
