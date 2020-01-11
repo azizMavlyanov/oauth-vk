@@ -21,10 +21,6 @@ app.use(express.static(publicDirectoryPath));
 app.use(express.json());
 app.use(cors());
 
-// const clientId = "7277202";
-// const clientSecret = "NHuM4xddzjBWIXEipLzp";
-// const redirectUri = "https://aziz-oauth-vk.herokuapp.com";
-
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const redirectUri = process.env.REDIRECT_URI;
@@ -50,7 +46,7 @@ app.get("/", async (req, res) => {
 
     // Retrieve data about user's friends
     const friendsResponse = await axios.get(
-      `https://api.vk.com/method/friends.get?uid=${user_id}&order=random&count=5&access_token=${access_token}&v=5.103&fields=photo_100,names&name_case=ins`
+      `https://api.vk.com/method/friends.get?uid=${user_id}&order=random&count=5&access_token=${access_token}&v=5.103&fields=photo_100,names&name_case=nom`
     );
     const listOfFriends = friendsResponse.data.response.items;
 
