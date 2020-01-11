@@ -9,7 +9,8 @@
 </head>
 
 <body>
-    <h1>Hello {{userFirstName}} {{userLastName}}</h1>
+    <h1>Авторизированный пользователь: {{userFirstName}} {{userLastName}}</h1>
+    <h3>Друзья пользователя:</h3>
     <ol>
         {{#each listOfFriends}}
         <li>{{this.first_name}} {{this.last_name}}</li>
