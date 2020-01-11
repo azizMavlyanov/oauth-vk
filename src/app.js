@@ -37,7 +37,7 @@ app.get("/", async (req, res) => {
   try {
     // Retrieve access_token, expires_in, user_id
     const response = await axios.get(
-      `https://oauth.vk.com/access_token?client_id=${clientId}&client_secret=${clientSecret}&code=${code}&redirect_uri=${redirectUrl}`
+      `https://oauth.vk.com/access_token?client_id=${clientId}&client_secret=${clientSecret}&code=${code}&redirect_uri=${redirectUri}`
     );
     const { access_token, expires_in, user_id } = response.data;
 
