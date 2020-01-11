@@ -18,9 +18,20 @@ app.get("/", (req, res) => {
   const code = req.query.code;
   if (!code) return res.sendFile(path.join(publicPath, "index.html"));
 
-  console.log(code);
+  // console.log(code);
 
-  res.send(`code: ${code}`);
+  try {
+        const response = await axios.get(
+          `https://oauth.vk.com/access_token?client_id=7277202&client_secret=NHuM4xddzjBWIXEipLzp&code=bd2b34adc1de13b59e&redirect_uri=https://aziz-oauth-vk.herokuapp.com`
+        );
+        console.log(response.body);
+        res.status(200).json({...response.body});
+      } catch (error) {
+        res.status(500).json({ error: "There is some error" });
+      }
+
+
+  // res.send(`code: ${code}`);
 });
 
 // app.get("/auth/vk", async (req, res) => {
