@@ -27,9 +27,11 @@ app.get("/", async (req, res) => {
       `https://api.vk.com/method/getProfiles?uid=${user_id}&access_token=${access_token}&v=5.103`
     );
     console.log(response.data);
-    res.status(200).json({ access_token, expires_in, user_id, data });
+    // res.status(200).json({ access_token, expires_in, user_id, data });
     // console.log(`code: ${code}`);
-    // res.send(`code: ${code}`);
+    res.send(
+      "Привет! ${data.response[0].first_name} ${data.response[0].last_name}"
+    );
   } catch (error) {
     res.status(500).json({ error: "There is some error" });
   }
