@@ -42,13 +42,13 @@ app.get("/", async (req, res) => {
     const userFirstName = data.response[0].first_name;
     const userLastName = data.response[0].last_name;
 
-    // const friendsResponse = await axios.get(
-    //   `https://api.vk.com/method/friends.get?uid=${user_id}&order=random&count=5&access_token=${access_token}&v=5.103&fields=photo_100,names&name_case=ins`
-    // );
-    // const listOfFriends = friendsResponse.data.response.items;
-    // console.log(friendsResponse.data.response);
+    const friendsResponse = await axios.get(
+      `https://api.vk.com/method/friends.get?uid=${user_id}&order=random&count=5&access_token=${access_token}&v=5.103&fields=photo_100,names&name_case=ins`
+    );
+    const listOfFriends = friendsResponse.data.response.items;
+    console.log(friendsResponse.data.response);
 
-    res.render("index", { userFirstName, userLastName });
+    res.render("index", { userFirstName, userLastName, listOfFriends });
   } catch (error) {
     res.status(500).json({ error: "There is some error" });
   }

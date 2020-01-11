@@ -10,6 +10,11 @@
 
 <body>
     <h1>Hello {{userFirstName}} {{userLastName}}</h1>
+    <ul>
+        {{#each listOfFriends}}
+        <ol>{{this.first_name}} {{this.last_name}}</ol>
+        {{/each}}
+    </ul>
 </body>
 
 </html>
