@@ -20,20 +20,21 @@ app.get("/", async (req, res) => {
 
   try {
     // Retrieve access_token, expires_in, user_id
-    const response = await axios.get(
-      `https://oauth.vk.com/access_token?client_id=7277202&client_secret=NHuM4xddzjBWIXEipLzp&code=${code}&redirect_uri=https://aziz-oauth-vk.herokuapp.com`
-    );
-    const { access_token, expires_in, user_id } = response.data;
-    const { data } = await axios.get(
-      `https://api.vk.com/method/getProfiles?uid=${user_id}&access_token=${access_token}&v=5.103`
-    );
-    const first_name = data.response[0].first_name;
-    const last_name = data.response[0].last_name;
+    // const response = await axios.get(
+    //   `https://oauth.vk.com/access_token?client_id=7277202&client_secret=NHuM4xddzjBWIXEipLzp&code=${code}&redirect_uri=https://aziz-oauth-vk.herokuapp.com`
+    // );
+    // const { access_token, expires_in, user_id } = response.data;
+    // const { data } = await axios.get(
+    //   `https://api.vk.com/method/getProfiles?uid=${user_id}&access_token=${access_token}&v=5.103`
+    // );
+    // const first_name = data.response[0].first_name;
+    // const last_name = data.response[0].last_name;
 
     // console.log(response.data);
     // res.status(200).json({ access_token, expires_in, user_id, data });
     // console.log(`code: ${code}`);
-    res.send(`Привет! ${first_name} ${last_name}`);
+    res.send("hi");
+    // res.send(`Привет! ${first_name} ${last_name}`);
   } catch (error) {
     res.status(500).json({ error: "There is some error" });
   }
